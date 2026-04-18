@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Nikkii 🎉</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3);
+    color:white;
+    text-align:center;
+    overflow:hidden;
+}
+
+/* screens */
+.screen{display:none;}
+.active{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+/* button */
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    background:white;
+    color:#ff4081;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+/* cake */
+.cake{font-size:80px;}
+.candle{font-size:30px; cursor:pointer;}
+
+/* message */
+#typeText{
+    width:70%;
+    font-size:18px;
+    line-height:1.6;
+}
+
+/* balloons */
+.balloon{
+    position:absolute;
+    bottom:-100px;
+    width:40px;
+    height:60px;
+    border-radius:50%;
+    animation:floatUp linear infinite;
+}
+
+@keyframes floatUp{
+    from{transform:translateY(0);}
+    to{transform:translateY(-120vh);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCREEN 1 -->
+<div id="s1" class="screen active">
+    <h1>🎉 Happy Birthday Nikkii 🎉</h1>
+    <button onclick="show(2)">Start</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div id="s2" class="screen">
+    <h2>Make a Wish 🕯️</h2>
+
+    <div onclick="blow()">
+        <div id="candle" class="candle">🕯️</div>
+        <div id="cake" class="cake">🎂</div>
+    </div>
+
+    <p id="msg">Tap candle to blow 💨</p>
+
+    <button id="cutBtn" style="display:none;" onclick="cutCake()">Cut Cake 🎂</button>
+
+    <div id="slice" style="display:none; font-size:70px; cursor:pointer;" onclick="eatCake()">🍰</div>
+    <p id="eatMsg"></p>
+</div>
+
+<!-- SCREEN 3 -->
+<div id="s3" class="screen">
+    <h2>💖 Dear Nikkii 💖</h2>
+    <p id="typeText"></p>
+    <button onclick="show(4)">Next ➡️</button>
+</div>
+
+<!-- SCREEN 4 -->
+<div id="s4" class="screen">
+    <h1>💖 THANK YOU FOR COMING INTO MY LIFE 💖</h1>
+    <p style="font-size:20px;">
+        May all your dreams come true and your life be filled with endless happiness ✨
+    </p>
+</div>
+
+<script>
+// screen switching
+function show(n){
+    document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+    document.getElementById("s"+n).classList.add("active");
+}
+
+// blow candle
+function blow(){
+    document.getElementById("candle").innerHTML="💨";
+    document.getElementById("msg").innerHTML="Now cut the cake 🎂";
+    document.getElementById("cutBtn").style.display="inline-block";
+}
+
+// cut cake
+function cutCake(){
+    document.getElementById("slice").style.display="block";
+    document.getElementById("eatMsg").innerHTML="Take a bite 😋";
+}
+
+// eat cake
+function eatCake(){
+    document.getElementById("slice").innerHTML="😋";
+    document.getElementById("eatMsg").innerHTML="Yummy! Happy Birthday 🎉";
+
+    setTimeout(()=>{
+        show(3);
+        typeMessage();
+        startBalloons();
+    },1500);
+}
+
+/* ===== FIXED TYPING (NO BUG) ===== */
+let typingInterval = null;
+
+function typeMessage(){
+    const message = `On this special day, I just want to say how lucky I am to have you as my best friend.
+
+Your smile, your kindness, and your support mean everything to me.
+May your life be filled with endless happiness, success, and beautiful moments.
+
+Many more happy returns of the day Nikkii.
+
+You are the most precious person in my life.
+Please make sure that you will never leave me.
+You are the one person who treats me like my mother after my mother.
+
+Fights between us are temporary,
+but the bond between us should be permanent.
+
+Stay with me forever and keep smiling always.
+
+Happy Birthday once again Nikkii.`;
+
+    let i = 0;
+    let target = document.getElementById("typeText");
+    target.innerHTML = "";
+
+    // STOP any previous typing
+    if (typingInterval) {
+        clearInterval(typingInterval);
+    }
+
+    typingInterval = setInterval(()=>{
+        if(i < message.length){
+            target.innerHTML += message.charAt(i);
+            i++;
+        } else {
+            clearInterval(typingInterval);
+        }
+    }, 30);
+}
+
+/* balloons */
+function startBalloons(){
+    setInterval(()=>{
+        let b=document.createElement("div");
+        b.className="balloon";
+
+        b.style.left=Math.random()*100+"vw";
+        b.style.background=["red","yellow","blue","green","pink","purple"][Math.floor(Math.random()*6)];
+        b.style.animationDuration=(Math.random()*3+4)+"s";
+
+        document.body.appendChild(b);
+
+        setTimeout(()=>b.remove(),8000);
+    },600);
+}
+</script>
+
+</body>
+</html>
+```
